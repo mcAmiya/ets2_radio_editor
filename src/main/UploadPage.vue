@@ -1,6 +1,8 @@
 <template>
   <el-upload class="upload-demo" drag multiple list-type="text" :auto-upload="false" :on-change="openFile">
-    <el-icon class="el-icon--upload"><upload-filled /></el-icon>
+    <el-icon class="el-icon--upload">
+      <upload-filled/>
+    </el-icon>
     <div class="el-upload__text">
       <!-- Drop file here or <em>click to upload</em> -->
       拖拽文件 或者 <em>点击这里</em> 上传
@@ -13,10 +15,10 @@
     </template>
   </el-upload>
 </template>
-  
+
 <script setup>
 // 使用全局配置
-import { useStore } from 'vuex';
+import {useStore} from 'vuex';
 
 const store = useStore();
 
@@ -32,10 +34,10 @@ const openFile = (file) => {
   var reader = new FileReader();
   reader.onload = () => {
     try {
-        // 使用 store.commit 来提交 mutation
-        store.commit('setFileContent', reader.result);
-        // 调用父组件的方法切换组件
-        changePage('MainPage')
+      // 使用 store.commit 来提交 mutation
+      store.commit('setFileContent', reader.result);
+      // 调用父组件的方法切换组件
+      changePage('MainPage')
     } catch (error) {
       console.error('上传文件失败：', error);
     }

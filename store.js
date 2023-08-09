@@ -1,13 +1,13 @@
-import { createStore } from 'vuex';
+import {createStore} from 'vuex';
 
 export default createStore({
-  state: {
-    fileContent: null,
-  },
-  mutations: {
-    setFileContent(state, content) {
-      state.fileContent = content;
+    state: {
+        fileContent: null,
     },
-  },
-  // 其他选项...
+    mutations: {
+        setFileContent(state, content) {
+            state.fileContent = content;
+        },
+    },
+    // 其他选项...
 });

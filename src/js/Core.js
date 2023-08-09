@@ -32,22 +32,22 @@ function parseRadioData(data) {
         stations.push(station);
     }
 
-    return { namelessField, stations };
+    return {namelessField, stations};
 }
 
 function createRadioData(namelessField, stations) {
     let data = `SiiNunit\n{\n  live_stream_def : ${namelessField} {\n    stream_data: ${stations.length}\n`;
     for (let i = 0; i < stations.length; i++) {
-      const station = stations[i];
-      const encodedName = (station.name);
-      const encodedGenre = (station.genre);
-      const encodedCountry = (station.country);
-      data += `    stream_data[${i}]: "${station.url}|${encodedName}|${encodedGenre}|${encodedCountry}|${station.bitrate}|${station.isLive ? 1 : 0}"\n`;
+        const station = stations[i];
+        const encodedName = (station.name);
+        const encodedGenre = (station.genre);
+        const encodedCountry = (station.country);
+        data += `    stream_data[${i}]: "${station.url}|${encodedName}|${encodedGenre}|${encodedCountry}|${station.bitrate}|${station.isLive ? 1 : 0}"\n`;
     }
     data += '  }\n}';
-  
+
     return data;
-  }
+}
 
 export default {
     parseRadioData,

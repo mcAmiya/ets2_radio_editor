@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import {ref} from 'vue'
 
 import UploadPage from './main/UploadPage.vue';
 import MainPage from './main/MainPage.vue';
@@ -14,22 +14,19 @@ const pages = {
 }
 
 // 切换页面
-const changePage = (newPage=String) => {
+const changePage = (newPage) => {
   console.log(`[changePage]切换页面至：${newPage}`)
-  page.value = newPage
+  page.value = newPage.toString()
 }
 </script>
 
 <!-- 页面 -->
 <template>
-  <component :is="pages[page]" @changePage="changePage" />
+  <component :is="pages[page]" @changePage="changePage"/>
   <!-- <el-button @click="page = 'demo';console.log(1)">
     hi
   </el-button> -->
 </template>
-
-
-
 
 
 <style scoped></style>

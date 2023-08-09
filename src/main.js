@@ -1,6 +1,6 @@
 // import './assets/main.css'
 // Vue3
-import { createApp } from 'vue'
+import {createApp} from 'vue'
 import App from './App.vue'
 // ElementPlus
 import ElementPlus from 'element-plus'
@@ -21,13 +21,13 @@ const app = createApp(App)
 
 // el-cion
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
-  app.component(key, component)
+    app.component(key, component)
 }
 
 app.use(router); // 将 router 与应用关联
 app.use(store); // 将 Vuex 的 store 与应用关联
 app.use(ElementPlus, {
-  locale: zhCn,
+    locale: zhCn,
 }) // 国际化
 
 app.mount('#app')
