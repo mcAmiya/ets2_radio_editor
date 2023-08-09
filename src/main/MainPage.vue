@@ -1,13 +1,21 @@
 <template>
   <!-- 导入按钮 -->
   <el-button @click="changePage('UploadPage')" type="primary">
-    <el-icon class="fa fa-edit icon"></el-icon>
+    <el-icon><DocumentAdd /></el-icon>
     <span class="table-header-operate-text">导入</span>
+  </el-button>
+
+  <!-- 新增按钮 在头部新增-->
+  <el-button
+      @click="solveContent.stations.unshift(newRadioData)"
+      type="primary">
+    <el-icon><Plus /></el-icon>
+    <span class="table-header-operate-text">新增</span>
   </el-button>
 
   <!-- 保存按钮 -->
   <el-button @click="saveFile(solveContent)" type="primary">
-    <el-icon class="fa fa-edit icon"></el-icon>
+    <el-icon><Download /></el-icon>
     <span class="table-header-operate-text">保存</span>
   </el-button>
 
@@ -18,6 +26,17 @@
     </el-icon>
     <span class="table-header-operate-text">批量删除</span>
   </el-button>
+
+  <!-- 蜻蜓fm按钮 -->
+  <el-button @click="qingtingfmDialogFormVisible = true" type="primary">
+    <el-icon><Headset /></el-icon>
+    <span class="table-header-operate-text">蜻蜓fm</span>
+  </el-button>
+
+  <!--版本标志-->
+  <el-badge value="2023/8/9" class="item">
+    Version
+  </el-badge>
 
   <el-table :data="solveContent.stations" border :header-cell-style="{ 'text-align': 'center' }"
             :cell-style="{ 'text-align': 'center' }" :row-class-name="tableRowClassName" highlight-current-row
@@ -37,13 +56,50 @@
     <!-- 删除框 -->
     <el-table-column fixed="right" label="操作" width="120">
       <template #default="scope">
-        <el-button link type="primary" size="small" disabled>编辑</el-button>
+        <el-button link type="primary" size="small" @click.prevent="editDialogFormVisible = true; Item = scope.$index">
+          编辑
+        </el-button>
         <el-button link type="primary" size="small" @click.prevent="deleteItems(scope.$index)">
           删除
         </el-button>
       </template>
     </el-table-column>
   </el-table>
+
+  <!-- 编辑 -->
+  <el-dialog v-model="editDialogFormVisible" draggable title="请编辑您的电台信息">
+    <el-form :model="solveContent.stations">
+      <el-space fill>
+        <el-alert type="info" show-icon :closable="false" title="温馨提示：">
+          <p>1.暂时⭐项不可修改 <s>(你要改也没办法 不生效罢了)</s></p>
+          <p>2.目前编辑内容均即刻生效 <s>(问就是bug，以后再改)</s></p>
+        </el-alert>
+
+        <!--      可编辑内容-->
+        <el-form-item v-for="(item, index) in columns" :key="index" :prop="item.prop" :label="item.label"
+                      :label-width="formLabelWidth">
+
+          <!--        输入框-->
+          <el-input v-model="solveContent.stations[Item][item.prop]" autocomplete="off"/>
+        </el-form-item>
+      </el-space>
+    </el-form>
+  </el-dialog>
+
+  <!-- 蜻蜓fm -->
+  <el-dialog v-model="qingtingfmDialogFormVisible" draggable title="请输入蜻蜓fm的电台页URL">
+    <el-form>
+      <!-- 输入内容-->
+      <el-form-item>
+        <el-form-item label="电台页URL" :label-width="225">
+          <el-input v-model="qingtingfmRadioURL" autocomplete="off" @change="getRadioRawURL(qingtingfmRadioURL)"/>
+        </el-form-item>
+        <el-form-item label="电台URL" :label-width="225">
+          <el-input v-model="qingtingfmRadioRawURL" autocomplete="off"/>
+        </el-form-item>
+      </el-form-item>
+    </el-form>
+  </el-dialog>
 </template>
 
 <script setup>
@@ -52,15 +108,37 @@ import {useStore} from 'vuex';
 // 使用解析scs电台文件核心库
 import core from '../js/Core'
 // Vue
-import {ref, markRaw} from 'vue'
+import {ref, markRaw, reactive} from 'vue'
 // Vue弹窗和图标
 import {ElMessage, ElMessageBox} from 'element-plus'
 import {Delete} from '@element-plus/icons-vue'
 
+// 当前项
+const Item = ref(0)
 // 调用父组件(App.vue)的changePage(newPage)函数来切换页面
 const emit = defineEmits(['changePage'])
 const changePage = (newPage) => {
   emit('changePage', newPage)
+}
+
+// 编辑框
+const editDialogFormVisible = ref(false)
+const formLabelWidth = '140px'
+
+// 新增电台默认数据
+const newRadioData = {url: '链接', name: '名称', genre: '流派', country: '国家', bitrate: 64, liked: false}
+
+// 蜻蜓fm
+const qingtingfmDialogFormVisible = ref(false)
+// const qingtingfmRadioURL = ref('https://www.qingting.fm/radios/1262')
+// let qingtingfmRadioRawURL = ref('https://lhttp.qtfm.cn/live/1262/64k.mp3')
+const qingtingfmRadioURL = ref('')
+let qingtingfmRadioRawURL = ref('')
+const getRadioRawURL = (URL) => {
+  if (URL) {
+    qingtingfmRadioRawURL.value = `https://lhttp.qtfm.cn/live/${URL.replace('https://www.qingting.fm/radios/', '')}/64k.mp3`
+    console.log("转换的电台直链:", qingtingfmRadioRawURL.value)
+  }
 }
 
 // 表格预定义
@@ -99,12 +177,12 @@ const store = useStore();
 const fileContent = store.state.fileContent;
 
 // 文件内容解析
-const solveContent = core.parseRadioData(fileContent)
+const solveContent = ref(core.parseRadioData(fileContent))
 
 // 表格数据导入
 try {
-  if (solveContent && Array.isArray(solveContent.stations)) {
-    console.log('当前文件数据：', solveContent)
+  if (solveContent && Array.isArray(solveContent.value.stations)) {
+    console.log('当前文件数据：', solveContent.value)
   }
 } catch (error) {
   console.error('解析文件内容失败：', error);
@@ -152,7 +230,7 @@ function delItemSelection() {
   )
       .then(() => {
         for (let i of multipleSelection) {
-          deleteItem(solveContent.stations.findIndex(item => item.id === i))
+          deleteItem(solveContent.value.stations.findIndex(item => item.id === i))
         }
         setCurrent()
       })
@@ -184,7 +262,7 @@ const deleteItems = (index) => {
 const deleteItem = (index) => {
   try {
     // 删除操作
-    ref(solveContent.stations).value.splice(index, 1)
+    ref(solveContent.value.stations).value.splice(index, 1)
     // 消息提示
     ElMessage({
       type: 'success',
