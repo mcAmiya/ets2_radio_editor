@@ -54,15 +54,10 @@ function createRadioData(stations) {
 }
 
 function getLiveUrl(channel_id) {
-    // const moment = require('moment');
-    // const crypto = require('crypto');
-
-
     const t = "/live/" + channel_id + "/64k.mp3", n = 'https://lhttp.qtfm.cn',
-        r = encodeURIComponent(moment().add(1, "hours").unix().toString(16)),
+        r = encodeURIComponent(moment().add(1, "weeks").unix().toString(16)),
         i = encodeURIComponent("web"),
         a = "app_id=" + i + "&path=" + encodeURIComponent(t) + "&ts=" + r,
-        // o = crypto.createHmac("md5", "Lwrpu$K5oP").update(a).digest("hex").toString();
         o = CryptoJS.HmacMD5(a, "Lwrpu$K5oP").toString(CryptoJS.enc.Hex);
     return "" + n + t + "?app_id=" + i + "&ts=" + r + "&sign=" + encodeURIComponent(o)
 }
