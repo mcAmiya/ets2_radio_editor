@@ -1,3 +1,6 @@
+import moment from 'moment'
+import CryptoJS from 'crypto-js'
+
 function decodeUnicode(str) {
     // 判断字符串中是否包含 %
     if (str.includes('%')) {
@@ -15,7 +18,7 @@ function parseRadioData(data) {
     const namelessMatch = regexNameless.exec(data);
     const namelessField = namelessMatch ? namelessMatch[1].trim() : '';
 
-    const regex = /stream_data\[\d+\]:\s*"([^"]+)"/g;
+    const regex = /stream_data\[\d+]:\s*"([^"]+)"/g;
     const stations = [];
     let match;
 
@@ -35,7 +38,8 @@ function parseRadioData(data) {
     return {namelessField, stations};
 }
 
-function createRadioData(namelessField, stations) {
+function createRadioData(stations) {
+    let namelessField = '.live_streams'
     let data = `SiiNunit\n{\n  live_stream_def : ${namelessField} {\n    stream_data: ${stations.length}\n`;
     for (let i = 0; i < stations.length; i++) {
         const station = stations[i];
@@ -49,7 +53,22 @@ function createRadioData(namelessField, stations) {
     return data;
 }
 
+function getLiveUrl(channel_id) {
+    // const moment = require('moment');
+    // const crypto = require('crypto');
+
+
+    const t = "/live/" + channel_id + "/64k.mp3", n = 'https://lhttp.qtfm.cn',
+        r = encodeURIComponent(moment().add(1, "hours").unix().toString(16)),
+        i = encodeURIComponent("web"),
+        a = "app_id=" + i + "&path=" + encodeURIComponent(t) + "&ts=" + r,
+        // o = crypto.createHmac("md5", "Lwrpu$K5oP").update(a).digest("hex").toString();
+        o = CryptoJS.HmacMD5(a, "Lwrpu$K5oP").toString(CryptoJS.enc.Hex);
+    return "" + n + t + "?app_id=" + i + "&ts=" + r + "&sign=" + encodeURIComponent(o)
+}
+
 export default {
     parseRadioData,
-    createRadioData
+    createRadioData,
+    getLiveUrl
 }

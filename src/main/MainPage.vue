@@ -1,7 +1,9 @@
 <template>
   <!-- 导入按钮 -->
   <el-button @click="changePage('UploadPage')" type="primary">
-    <el-icon><DocumentAdd /></el-icon>
+    <el-icon>
+      <DocumentAdd/>
+    </el-icon>
     <span class="table-header-operate-text">导入</span>
   </el-button>
 
@@ -9,13 +11,17 @@
   <el-button
       @click="solveContent.stations.unshift(newRadioData)"
       type="primary">
-    <el-icon><Plus /></el-icon>
+    <el-icon>
+      <Plus/>
+    </el-icon>
     <span class="table-header-operate-text">新增</span>
   </el-button>
 
   <!-- 保存按钮 -->
   <el-button @click="saveFile(solveContent)" type="primary">
-    <el-icon><Download /></el-icon>
+    <el-icon>
+      <Download/>
+    </el-icon>
     <span class="table-header-operate-text">保存</span>
   </el-button>
 
@@ -29,7 +35,9 @@
 
   <!-- 蜻蜓fm按钮 -->
   <el-button @click="qingtingfmDialogFormVisible = true" type="primary">
-    <el-icon><Headset /></el-icon>
+    <el-icon>
+      <Headset/>
+    </el-icon>
     <span class="table-header-operate-text">蜻蜓fm</span>
   </el-button>
 
@@ -88,6 +96,10 @@
 
   <!-- 蜻蜓fm -->
   <el-dialog v-model="qingtingfmDialogFormVisible" draggable title="请输入蜻蜓fm的电台页URL">
+<!--    电台信息 跨域问题暂不使用-->
+<!--    <div>-->
+<!--    <el-image style="width: 100px; height: 100px" :src="radioPicUrl" :fit="fill" />-->
+<!--    </div>-->
     <el-form>
       <!-- 输入内容-->
       <el-form-item>
@@ -112,6 +124,7 @@ import {ref, markRaw, reactive} from 'vue'
 // Vue弹窗和图标
 import {ElMessage, ElMessageBox} from 'element-plus'
 import {Delete} from '@element-plus/icons-vue'
+import axios from 'axios'
 
 // 当前项
 const Item = ref(0)
@@ -136,10 +149,24 @@ const qingtingfmRadioURL = ref('')
 let qingtingfmRadioRawURL = ref('')
 const getRadioRawURL = (URL) => {
   if (URL) {
-    qingtingfmRadioRawURL.value = `https://lhttp.qtfm.cn/live/${URL.replace('https://www.qingting.fm/radios/', '')}/64k.mp3`
+    let URL_Head = 'https://www.qingting.fm/radios/'
+    console.log(URL.includes(URL_Head))
+    if (URL.includes(URL_Head)) {
+      let channel_id = URL.replace(URL_Head, '').replace('/', '')
+      console.log(channel_id)
+      qingtingfmRadioRawURL.value = core.getLiveUrl(channel_id)
+      // 跨域了
+      // axios.get(`https://webapi.qingting.fm/api/pc/radio/${channel_id}`).then((res)=>{
+      //   console.log(res)
+      // })
+    } else {
+      qingtingfmRadioRawURL.value = '电台页链接有误，请检查！'
+    }
     console.log("转换的电台直链:", qingtingfmRadioRawURL.value)
   }
 }
+// 电台图片
+// const radioPicUrl = ref('http://pic.qtfm.cn/2016/0627/2016062715553137.png')
 
 // 表格预定义
 const dataTableRef = ref()
@@ -191,7 +218,8 @@ try {
 // 保存文件并下载
 function saveFile(solveContent) {
   // 处理文件成游戏格式
-  const fileContent = core.createRadioData(solveContent.namelessField, solveContent.stations);
+  // 不再使用玩家自己传的namelessField 使用游戏默认的
+  const fileContent = core.createRadioData(solveContent.stations);
   console.log("处理后数据为：", fileContent)
 
   // 创建用于下载的元素

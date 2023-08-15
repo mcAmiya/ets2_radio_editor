@@ -2,7 +2,7 @@
 <p align="center">
     <s>高颜值的</s>第三方欧卡2电台编辑器
     <br />
-    Version: 2023/8/9
+    Version: 2023/8/15
     <!-- <a href="https://music.qier222.com" target="blank"><strong>🌎 访问DEMO</strong></a>  |  
     <a href="#%EF%B8%8F-安装" target="blank"><strong>📦️ 下载安装包</strong></a>  |  
     <a href="https://t.me/yesplaymusic" target="blank"><strong>💬 加入交流群</strong></a>
