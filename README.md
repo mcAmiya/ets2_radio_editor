@@ -2,7 +2,7 @@
 <p align="center">
     <s>高颜值的</s>第三方欧卡2电台编辑器
     <br />
-    Version: 2023/8/15
+    Version: 2023/9/9
     <!-- <a href="https://music.qier222.com" target="blank"><strong>🌎 访问DEMO</strong></a>  |  
     <a href="#%EF%B8%8F-安装" target="blank"><strong>📦️ 下载安装包</strong></a>  |  
     <a href="https://t.me/yesplaymusic" target="blank"><strong>💬 加入交流群</strong></a>
@@ -21,28 +21,28 @@
 - 📻 支持蜻蜓fm电台页转直链
 - 🖥️ 支持 PWA，可在 Chrome/Edge 里点击地址栏右边的 ➕ 安装到电脑
 
-## 📦️ 打包
+## 🛠️ 开发&打包
 
-- 🛠 直接 git clone 然后安装依赖打包即可
+- 安装项目依赖
 
 ```shell
-# 安装依赖
 npm install
-
-# 打包
-npm run build
 ```
 
-## 💻 配置开发环境
+## 💻 开发
 
-运行本项目
+- 运行本项目
 
 ```shell
-# 安装依赖
-npm install
-
-# 运行
 npm run dev
+```
+
+## 📦️ 打包
+
+- 直接 git clone 然后[安装依赖](#-开发打包)打包即可
+
+```shell
+npm run build
 ```
 
 ## ☑️ Todo

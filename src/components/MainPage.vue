@@ -1,60 +1,60 @@
 <template>
   <!-- 导入按钮 -->
-  <el-button @click="changePage('UploadPage')" type="primary">
+  <el-button type="primary" @click="changePage('UploadPage')">
     <el-icon>
-      <DocumentAdd/>
+      <i-ep-DocumentAdd/>
     </el-icon>
     <span class="table-header-operate-text">导入</span>
   </el-button>
 
   <!-- 新增按钮 在头部新增-->
   <el-button
-      @click="solveContent.stations.unshift(newRadioData)"
-      type="primary">
+      type="primary"
+      @click="solveContent.stations.unshift(newRadioData)">
     <el-icon>
-      <Plus/>
+      <i-ep-Plus/>
     </el-icon>
     <span class="table-header-operate-text">新增</span>
   </el-button>
 
   <!-- 保存按钮 -->
-  <el-button @click="saveFile(solveContent)" type="primary">
+  <el-button type="primary" @click="saveFile(solveContent)">
     <el-icon>
-      <Download/>
+      <i-ep-Download/>
     </el-icon>
     <span class="table-header-operate-text">保存</span>
   </el-button>
 
   <!-- 批量删除按钮 -->
-  <el-button @click="delItemSelection()" type="primary">
+  <el-button type="primary" @click="delItemSelection()">
     <el-icon>
-      <Delete/>
+      <i-ep-Delete/>
     </el-icon>
     <span class="table-header-operate-text">批量删除</span>
   </el-button>
 
   <!-- 蜻蜓fm按钮 -->
-  <el-button @click="qingtingfmDialogFormVisible = true" type="primary">
+  <el-button type="primary" @click="qingtingfmDialogFormVisible = true">
     <el-icon>
-      <Headset/>
+      <i-ep-Headset/>
     </el-icon>
     <span class="table-header-operate-text">蜻蜓fm</span>
   </el-button>
 
   <!--版本标志-->
-  <el-badge value="2023/8/9" class="item">
+  <el-badge class="item" value="2023/9/9">
     Version
   </el-badge>
 
-  <el-table :data="solveContent.stations" border :header-cell-style="{ 'text-align': 'center' }"
-            :cell-style="{ 'text-align': 'center' }" :row-class-name="tableRowClassName" highlight-current-row
-            @selection-change="handleSelectionChange" max-height="520" ref="dataTableRef">
+  <el-table ref="dataTableRef" :cell-style="{ 'text-align': 'center' }" :data="solveContent.stations"
+            :header-cell-style="{ 'text-align': 'center' }" :row-class-name="tableRowClassName" border
+            highlight-current-row max-height="520" @selection-change="handleSelectionChange">
 
     <!-- 表格列定义 -->
     <!-- 多选框 -->
     <el-table-column type="selection" width="55"/>
     <!-- 数据 -->
-    <el-table-column v-for="(item, index) in columns" :key="index" :prop="item.prop" :label="item.label">
+    <el-table-column v-for="(item, index) in columns" :key="index" :label="item.label" :prop="item.prop">
       <!-- 星星替换 -->
       <template v-if="item.prop === 'liked'" v-slot="{ row }">
         <a v-if="row.liked">⭐</a>
@@ -64,10 +64,10 @@
     <!-- 删除框 -->
     <el-table-column fixed="right" label="操作" width="120">
       <template #default="scope">
-        <el-button link type="primary" size="small" @click.prevent="editDialogFormVisible = true; Item = scope.$index">
+        <el-button link size="small" type="primary" @click.prevent="editDialogFormVisible = true; Item = scope.$index">
           编辑
         </el-button>
-        <el-button link type="primary" size="small" @click.prevent="deleteItems(scope.$index)">
+        <el-button link size="small" type="primary" @click.prevent="deleteItems(scope.$index)">
           删除
         </el-button>
       </template>
@@ -78,14 +78,14 @@
   <el-dialog v-model="editDialogFormVisible" draggable title="请编辑您的电台信息">
     <el-form :model="solveContent.stations">
       <el-space fill>
-        <el-alert type="info" show-icon :closable="false" title="温馨提示：">
+        <el-alert :closable="false" show-icon title="温馨提示：" type="info">
           <p>1.暂时⭐项不可修改 <s>(你要改也没办法 不生效罢了)</s></p>
           <p>2.目前编辑内容均即刻生效 <s>(问就是bug，以后再改)</s></p>
         </el-alert>
 
         <!--      可编辑内容-->
-        <el-form-item v-for="(item, index) in columns" :key="index" :prop="item.prop" :label="item.label"
-                      :label-width="formLabelWidth">
+        <el-form-item v-for="(item, index) in columns" :key="index" :label="item.label" :label-width="formLabelWidth"
+                      :prop="item.prop">
 
           <!--        输入框-->
           <el-input v-model="solveContent.stations[Item][item.prop]" autocomplete="off"/>
@@ -96,17 +96,17 @@
 
   <!-- 蜻蜓fm -->
   <el-dialog v-model="qingtingfmDialogFormVisible" draggable title="请输入蜻蜓fm的电台页URL">
-<!--    电台信息 跨域问题暂不使用-->
-<!--    <div>-->
-<!--    <el-image style="width: 100px; height: 100px" :src="radioPicUrl" :fit="fill" />-->
-<!--    </div>-->
+    <!--    电台信息 跨域问题暂不使用-->
+    <!--    <div>-->
+    <!--    <el-image style="width: 100px; height: 100px" :src="radioPicUrl" :fit="fill" />-->
+    <!--    </div>-->
     <el-form>
       <!-- 输入内容-->
       <el-form-item>
-        <el-form-item label="电台页URL" :label-width="225">
+        <el-form-item :label-width="225" label="电台页URL">
           <el-input v-model="qingtingfmRadioURL" autocomplete="off" @change="getRadioRawURL(qingtingfmRadioURL)"/>
         </el-form-item>
-        <el-form-item label="电台URL" :label-width="225">
+        <el-form-item :label-width="225" label="电台URL">
           <el-input v-model="qingtingfmRadioRawURL" autocomplete="off"/>
         </el-form-item>
       </el-form-item>
@@ -116,15 +116,11 @@
 
 <script setup>
 // 使用全局配置
-import {useStore} from 'vuex';
+import {useStore} from "@/store";
 // 使用解析scs电台文件核心库
 import core from '../js/Core'
-// Vue
-import {ref, markRaw, reactive} from 'vue'
-// Vue弹窗和图标
-import {ElMessage, ElMessageBox} from 'element-plus'
+// Icon
 import {Delete} from '@element-plus/icons-vue'
-import axios from 'axios'
 
 // 当前项
 const Item = ref(0)
@@ -201,7 +197,7 @@ function tableRowClassName({rowIndex}) {
 
 const store = useStore();
 // 文件内容等于全局配置的内容
-const fileContent = store.state.fileContent;
+const fileContent = store.fileContent;
 
 // 文件内容解析
 const solveContent = ref(core.parseRadioData(fileContent))

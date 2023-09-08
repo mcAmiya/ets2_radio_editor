@@ -1,9 +1,13 @@
 <script setup>
-import {ref} from 'vue'
+// ElementPlus组件国际化
+import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
+import en from 'element-plus/dist/locale/en.mjs'
 
-import UploadPage from './main/UploadPage.vue';
-import MainPage from './main/MainPage.vue';
+const locale = ref(zhCn)
 
+// 导入各个页面
+import MainPage from '@/components/MainPage.vue'
+import UploadPage from "@/components/UploadPage.vue";
 
 // 默认页面
 const page = ref('UploadPage')
@@ -22,23 +26,14 @@ const changePage = (newPage) => {
 
 <!-- 页面 -->
 <template>
-  <component :is="pages[page]" @changePage="changePage"/>
-  <!-- <el-button @click="page = 'demo';console.log(1)">
-    hi
-  </el-button> -->
+  <!--  ElementPlus组件国际化-->
+  <el-config-provider :locale="locale">
+    <!--    <el-table mb-1 :data="[]"/>-->
+    <component :is="pages[page]" @changePage="changePage"/>
+    <!--    <el-table mb-1 :data="[]"/>-->
+  </el-config-provider>
 </template>
 
 
-<style scoped></style>
-
-<style>
-/* #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-} */
+<style scoped>
 </style>
-
