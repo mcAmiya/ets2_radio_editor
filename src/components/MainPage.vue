@@ -55,7 +55,7 @@
     <el-table-column type="selection" width="55"/>
     <!-- 数据 -->
     <el-table-column v-for="(item, index) in columnsShow" :key="index" :label="item.label" :prop="item.prop"
-                     :width="item.width">
+                     :fit="true" :width="item.width">
       <!-- 星星替换 -->
       <template v-if="item.prop === 'liked'" v-slot="{ row }">
         <a v-if="row.liked">⭐</a>
@@ -185,7 +185,7 @@ const setCurrent = (row) => {
 
 const columnsShow = [
   // 展示表格列定义
-  {prop: 'liked', label: '⭐', width: '40px'}, // 设置宽度为40px
+  {prop: 'liked', label: '⭐', width: '45px'}, // 设置宽度为45px
   {prop: 'name', label: '名称', width: '150px'}, // 设置宽度为150px
   {prop: 'genre', label: '流派', width: '100px'}, // 设置宽度为100px
   {prop: 'country', label: '语言', width: '100px'}, // 设置宽度为100px
