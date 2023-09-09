@@ -10,7 +10,7 @@ import MainPage from '@/components/MainPage.vue'
 import UploadPage from "@/components/UploadPage.vue";
 
 // 默认页面
-const page = ref('UploadPage')
+const page = ref('MainPage')
 // 页面数
 const pages = {
   UploadPage,
