@@ -48,7 +48,7 @@ const changePage = (newPage) => {
 }
 
 /* 全局字体 */
-#app {
+#app, .el-overlay-message-box {
   font-family: HarmonyOS_Sans_SC_Medium, HarmonyOS_Sans_Medium, serif !important;
 }
 
