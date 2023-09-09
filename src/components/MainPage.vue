@@ -86,18 +86,19 @@
   <el-dialog v-model="editDialogFormVisible" draggable title="请编辑您的电台信息">
     <el-form :model="solveContent.stations">
       <el-space fill>
-        <el-alert :closable="false" show-icon title="温馨提示：" type="info">
-          <p>1.暂时⭐项不可修改 <s>(你要改也没办法 不生效罢了)</s></p>
-          <p>2.目前编辑内容均即刻生效 <s>(问就是bug，以后再改)</s></p>
-        </el-alert>
-
         <!-- 可编辑内容 -->
         <el-form-item v-for="(item, index) in columnsEdit" :key="index" :label="item.label"
                       :label-width="formLabelWidth"
                       :prop="item.prop">
+          <!-- 输入框 -->
+          <el-input v-if="item.prop !== 'liked'" v-model="solveContent.stations[Item][item.prop]" autocomplete="off"/>
+          <!--收藏开关-->
+          <el-switch v-if="item.prop === 'liked'"
+                     v-model="solveContent.stations[Item][item.prop]"
+                     active-text="⭐"
 
-          <!--        输入框-->
-          <el-input v-model="solveContent.stations[Item][item.prop]" autocomplete="off"/>
+                     inactive-text="⛤"
+                     inline-prompt/>
         </el-form-item>
       </el-space>
     </el-form>
