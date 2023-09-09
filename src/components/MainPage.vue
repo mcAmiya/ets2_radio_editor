@@ -61,6 +61,13 @@
         <a v-if="row.liked">⭐</a>
         <a v-else>⛤</a>
       </template>
+      <!-- URL试听列 -->
+      <template v-if="item.prop === 'url_listen'" v-slot="{ row }">
+        <audio controls>
+          <source :src="row.url" type="audio/mpeg">
+          您的浏览器不支持 audio 元素。
+        </audio>
+      </template>
     </el-table-column>
     <!-- 删除框 -->
     <el-table-column fixed="right" label="操作" width="true">
