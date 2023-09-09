@@ -35,5 +35,15 @@ const changePage = (newPage) => {
 </template>
 
 
-<style scoped>
+<style>
+//字体
+@font-face {
+  font-family: 'HarmonyOS_Sans_SC_Medium';
+  src: url("./font-style/HarmonyOS_Sans_SC_Medium.ttf");
+}
+
+//全局字体
+body {
+  font-family: 'HarmonyOS_Sans_SC_Medium', serif;
+}
 </style>
