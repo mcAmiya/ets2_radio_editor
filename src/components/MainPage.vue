@@ -54,7 +54,8 @@
     <!-- 多选框 -->
     <el-table-column type="selection" width="55"/>
     <!-- 数据 -->
-    <el-table-column v-for="(item, index) in columns" :key="index" :label="item.label" :prop="item.prop">
+    <el-table-column v-for="(item, index) in columnsShow" :key="index" :label="item.label" :prop="item.prop"
+                     :width="item.width">
       <!-- 星星替换 -->
       <template v-if="item.prop === 'liked'" v-slot="{ row }">
         <a v-if="row.liked">⭐</a>
@@ -62,7 +63,7 @@
       </template>
     </el-table-column>
     <!-- 删除框 -->
-    <el-table-column fixed="right" label="操作" width="120">
+    <el-table-column fixed="right" label="操作" width="true">
       <template #default="scope">
         <el-button link size="small" type="primary" @click.prevent="editDialogFormVisible = true; Item = scope.$index">
           编辑
@@ -83,8 +84,9 @@
           <p>2.目前编辑内容均即刻生效 <s>(问就是bug，以后再改)</s></p>
         </el-alert>
 
-        <!--      可编辑内容-->
-        <el-form-item v-for="(item, index) in columns" :key="index" :label="item.label" :label-width="formLabelWidth"
+        <!-- 可编辑内容 -->
+        <el-form-item v-for="(item, index) in columnsEdit" :key="index" :label="item.label"
+                      :label-width="formLabelWidth"
                       :prop="item.prop">
 
           <!--        输入框-->
@@ -173,8 +175,18 @@ const setCurrent = (row) => {
   }
 }
 
-const columns = [
-  // 表格列定义
+const columnsShow = [
+  // 展示表格列定义
+  {prop: 'liked', label: '⭐', width: '40px'}, // 设置宽度为40px
+  {prop: 'name', label: '名称', width: '150px'}, // 设置宽度为150px
+  {prop: 'genre', label: '流派', width: '100px'}, // 设置宽度为100px
+  {prop: 'country', label: '语言', width: '100px'}, // 设置宽度为100px
+  {prop: 'bitrate', label: '比特率', width: '80px'}, // 设置宽度为80px
+  {prop: 'url', label: 'URL', width: '313px'}, // 设置宽度为200px
+  {prop: 'url_listen', label: 'URL试听', width: '325px'} // 设置宽度为150px
+]
+const columnsEdit = [
+  // 编辑窗口列定义
   {prop: 'liked', label: '⭐'},
   {prop: 'name', label: '名称'},
   {prop: 'genre', label: '流派'},
