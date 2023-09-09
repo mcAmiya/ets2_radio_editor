@@ -42,7 +42,7 @@
   </el-button>
 
   <!--版本标志-->
-  <el-badge class="item" value="2.0.0.202309091245">
+  <el-badge class="item" value="2.0.1.202309091746">
     Version
   </el-badge>
 
