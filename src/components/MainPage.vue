@@ -190,7 +190,7 @@ const columnsShow = [
   {prop: 'genre', label: '流派', width: '100px'}, // 设置宽度为100px
   {prop: 'country', label: '语言', width: '100px'}, // 设置宽度为100px
   {prop: 'bitrate', label: '比特率', width: '80px'}, // 设置宽度为80px
-  {prop: 'url', label: 'URL', width: '313px'}, // 设置宽度为200px
+  {prop: 'url', label: 'URL', width: '288px'}, // 设置宽度为288px
   {prop: 'url_listen', label: 'URL试听', width: '325px'} // 设置宽度为150px
 ]
 const columnsEdit = [
