@@ -9,7 +9,7 @@
 
   <!-- 新增按钮 在头部新增-->
   <el-button
-      type="primary"
+      type="success"
       @click="solveContent.stations.unshift(newRadioData)">
     <el-icon>
       <i-ep-Plus/>
@@ -18,7 +18,7 @@
   </el-button>
 
   <!-- 保存按钮 -->
-  <el-button type="primary" @click="saveFile(solveContent)">
+  <el-button type="warning" @click="saveFile(solveContent)">
     <el-icon>
       <i-ep-Download/>
     </el-icon>
@@ -26,7 +26,7 @@
   </el-button>
 
   <!-- 批量删除按钮 -->
-  <el-button type="primary" @click="delItemSelection()">
+  <el-button type="danger" @click="delItemSelection()">
     <el-icon>
       <i-ep-Delete/>
     </el-icon>
@@ -34,7 +34,7 @@
   </el-button>
 
   <!-- 蜻蜓fm按钮 -->
-  <el-button type="primary" @click="qingtingfmDialogFormVisible = true">
+  <el-button type="info" @click="qingtingfmDialogFormVisible = true">
     <el-icon>
       <i-ep-Headset/>
     </el-icon>
