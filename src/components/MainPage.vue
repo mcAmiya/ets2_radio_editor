@@ -10,7 +10,7 @@
   <!-- 新增按钮 在头部新增-->
   <el-button
       type="success"
-      @click="solveContent.stations.unshift(newRadioData)">
+      @click="solveContent.stations.unshift({url: '链接', name: '名称', genre: '流派', country: '国家', bitrate: 64, liked: false})">
     <el-icon>
       <i-ep-Plus/>
     </el-icon>
@@ -133,9 +133,6 @@ const changePage = (newPage) => {
 // 编辑框
 const editDialogFormVisible = ref(false)
 const formLabelWidth = '140px'
-
-// 新增电台默认数据
-const newRadioData = {url: '链接', name: '名称', genre: '流派', country: '国家', bitrate: 64, liked: false}
 
 // 蜻蜓fm
 const qingtingfmDialogFormVisible = ref(false)
