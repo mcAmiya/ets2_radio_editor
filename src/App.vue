@@ -36,7 +36,7 @@ const changePage = (newPage) => {
 
 
 <style>
-//字体
+/* 字体 */
 @font-face {
   font-family: 'HarmonyOS_Sans_SC_Medium';
   src: url("./font-style/HarmonyOS_Sans_SC_Medium.ttf");
@@ -47,12 +47,12 @@ const changePage = (newPage) => {
   src: url("./font-style/HarmonyOS_Sans_Medium.ttf");
 }
 
-//全局字体
+/* 全局字体 */
 #app {
   font-family: HarmonyOS_Sans_SC_Medium, HarmonyOS_Sans_Medium, serif !important;
 }
 
-//继承上级(#app)的属性
+/* 继承上级(#app)的属性 */
 .el-button {
   font-family: inherit;
 }
