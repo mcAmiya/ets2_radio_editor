@@ -1,6 +1,6 @@
 {
   "name": "ets2_radio_editor",
-  "version": "2.0.0.202309090049",
+  "version": "2.0.0.202309091245",
   "private": true,
   "scripts": {
     "dev": "vite",
