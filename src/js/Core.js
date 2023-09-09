@@ -46,7 +46,7 @@ function createRadioData(stations) {
         const encodedName = (station.name);
         const encodedGenre = (station.genre);
         const encodedCountry = (station.country);
-        data += `    stream_data[${i}]: "${station.url}|${encodedName}|${encodedGenre}|${encodedCountry}|${station.bitrate}|${station.isLive ? 1 : 0}"\n`;
+        data += `    stream_data[${i}]: "${station.url}|${encodedName}|${encodedGenre}|${encodedCountry}|${station.bitrate}|${station.liked ? 1 : 0}"\n`;
     }
     data += '  }\n}';
 
