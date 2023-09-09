@@ -42,8 +42,13 @@ const changePage = (newPage) => {
   src: url("./font-style/HarmonyOS_Sans_SC_Medium.ttf");
 }
 
+@font-face {
+  font-family: 'HarmonyOS_Sans_Medium';
+  src: url("./font-style/HarmonyOS_Sans_Medium.ttf");
+}
+
 //全局字体
-body {
-  font-family: 'HarmonyOS_Sans_SC_Medium', serif;
+#app {
+  font-family: HarmonyOS_Sans_SC_Medium, HarmonyOS_Sans_Medium, serif !important;
 }
 </style>
