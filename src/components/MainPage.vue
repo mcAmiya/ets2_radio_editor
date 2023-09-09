@@ -253,10 +253,17 @@ function delItemSelection() {
       }
   )
       .then(() => {
+        // 定义一个状态 默认是执行成功的
+        let batchDeleteStatus = true
         for (let i of multipleSelection) {
-          deleteItem(solveContent.value.stations.findIndex(item => item.id === i))
+          // 如果有任何一次删除失败
+          if (!deleteItem(solveContent.value.stations.findIndex(item => item.id === i))) {
+            // 设置批量删除状态为false
+            batchDeleteStatus = false
+          }
         }
         setCurrent()
+        showDelMessage(batchDeleteStatus)
       })
       .catch(() => {
         console.log('取消删除选中项')
@@ -275,7 +282,7 @@ const deleteItems = (index) => {
       }
   )
       .then(() => {
-        deleteItem(index)
+        showDelMessage(deleteItem(index))
       })
       .catch(() => {
         console.log('取消')
@@ -287,21 +294,29 @@ const deleteItem = (index) => {
   try {
     // 删除操作
     ref(solveContent.value.stations).value.splice(index, 1)
+    return true
+  } catch (e) {
+    return false
+  }
+  return false
+}
+
+const showDelMessage = (status) => {
+  if (status) {
     // 消息提示
     ElMessage({
       type: 'success',
       message: '已删除',
     })
-    return true
-  } catch (e) {
+  } else {
     // 消息提示
     ElMessage({
       type: 'error',
       message: '删除失败',
     })
   }
-  return false
 }
+
 </script>
 
 <style>
