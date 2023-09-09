@@ -51,4 +51,10 @@ const changePage = (newPage) => {
 #app {
   font-family: HarmonyOS_Sans_SC_Medium, HarmonyOS_Sans_Medium, serif !important;
 }
+
+//继承上级(#app)的属性
+.el-button {
+  font-family: inherit;
+}
+
 </style>
