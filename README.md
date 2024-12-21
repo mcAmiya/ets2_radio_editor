@@ -1,3 +1,5 @@
+![BigLogo](./pic/ert_logo_big.png)
+
 <h2 align="center" style="font-weight: 600">欧卡2-电台编辑器</h2>
 <p align="center">
     <s>高颜值的</s>第三方欧卡2电台编辑器
